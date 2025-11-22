@@ -1,0 +1,280 @@
+"             _                    
+"      __   _(_)_ __ ___  _ __ ___ 
+"      \ \ / / | '_ ` _ \| '__/ __|
+"       \ V /| | | | | | | | | (__ 
+"      (_)_/ |_|_| |_| |_|_|  \___|
+"
+"         Author: Ferdi Schmidt <vim@ayu.co.za>
+"        Last Update: 2015-12-03
+"        Plugins: 2017-04-10
+
+" User Interface {{{
+
+" Hemisu theme
+" Website: https://noahfrederick.com/vim-color-scheme-hemisu/
+colorscheme hemisu
+
+" Dark color scheme (we have cookies)
+set background=dark
+
+" Set 'nocompatible' to ward off unexpected things that your distro might
+" have made, as well as sanely reset options when re-sourcing .vimrc
+set nocompatible
+
+" Attempt to determine the type of a file based on its name and possibly its
+" contents. Use this to allow intelligent auto-indenting for each filetype,
+" and for plugins that are filetype specific.
+filetype indent plugin on
+
+" Enable syntax highlighting
+syntax on
+
+" Incremental searching
+:set incsearch
+
+" Highlight searched
+:set hlsearch
+
+" Set indent width to 4
+:set shiftwidth=4
+
+" ALWAYS use spaced instead of tabs
+set expandtab
+
+" Tabs should be four spaces
+set ts=4
+
+" Better command-line completion
+set wildmenu
+
+" Show partial commands in the last line of the screen
+set showcmd
+
+" Use case insensitive search, except when using capital letters
+set ignorecase
+set smartcase
+
+" Makes the popup menu not select the first completion item, but rather just inserts the longest common text of all matches
+set completeopt=longest,menuone
+
+" When opening a new line and no filetype-specific indenting is enabled, keep
+" the same indent as the line you're currently on. Useful for READMEs, etc.
+set autoindent
+
+" Stop certain movements from always going to the first character of a line.
+" While this behaviour deviates from that of Vi, it does what most users
+" cominasdjflkasjg frsdsaom other editors would expect.
+" set nostartofline
+" Disabled, slows down mode transitions with <Esc>
+
+" Use relative line numbers
+set relativenumber
+
+" Use absolute line numbering in insert mode
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+
+" Highlight the line where the cursor is at
+set cursorline
+
+" Highlight matching block statement position
+set showmatch
+
+" Always show status bar (hidden due to powerline)
+set laststatus=2
+
+" Always save, but also, please don't loose my saved files (:ls)
+set hidden
+
+" Backspae cna be anything, really!
+set backspace=indent,eol,start
+
+" If I have to rm **/*.swp again... *rage*
+set noswapfile     
+
+" Set folding to markers, e.g. label {{{ ... }}}
+set fdm=marker
+
+" Automatically reload unchanged file buffers when the file changes on disk
+" This is very similar to just calling :edit! to reopen the file
+set autoread
+" }}}
+
+
+" GUI specific {{{
+if has("gui_running")
+    " Change to a light scheme when running as GUI
+    "set background=light
+    "let g:airline_theme="light"
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+        set guifont=Inconsolata\ for\ Powerline:h15
+    endif
+else
+    set term=xterm-256color
+endif
+" }}}
+
+" Mouse & Scrollbar {{{
+" enable mouse support
+set mouse=a
+set ttymouse=xterm2
+set ttyfast
+
+" hide scrollbars in gvim
+set guioptions-=m  "remove menu 
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
+" }}}
+
+" Spell checking (Kan jy apetie spel?) {{{
+":set spell spelllang=en_gb
+":hi SpellBad cterm=underline ctermfg=red
+" }}}
+
+" Key remaps {{{
+" Map jk to ECS
+:imap jk <Esc>
+
+" Map C-S to :w
+:nmap <c-s> :w<CR>
+
+" Map C-l to :TagbarToggle
+:nmap <c-l> :TagbarToggle<CR>
+
+" Remap arrow keys to noops
+nnoremap <LEFT> <nop>
+nnoremap <RIGHT> <nop>
+nnoremap <DOWN> <nop>
+nnoremap <UP> <nop>
+
+" }}}
+
+" Tabs {{{
+" Open new blank tab
+nnoremap gc :tabe<CR>
+
+" Open current file in new tab
+nnoremap gC :tabe %<CR>
+" }}}
+
+" Filetype Enhancements {{{
+" SASS syntax
+au BufRead,BufNewFile *.scss set filetype=scss.css
+autocmd FileType scss set iskeyword+=-
+
+" Handlebars syntax
+au BufRead,BufNewFile *.handlebars,*.hbs set ft=html syntax=mustache
+au BufRead,BufNewFile *.hbs setfiletype mustache
+" }}}
+
+
+" Plugins {{{
+" Vundle {{{
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'digitaltoad/vim-jade'
+Plugin 'majutsushi/tagbar'
+Plugin 'pangloss/vim-javascript'
+Plugin 'noahfrederick/vim-hemisu'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mhinz/vim-startify'
+Plugin 'junegunn/limelight.vim'
+Plugin 'junegunn/goyo.vim'
+Plugin 'blueyed/vim-diminactive'
+Plugin 'mileszs/ack.vim'
+Plugin 'JulesWang/css.vim' " only necessary if your Vim version < 7.4
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'einars/js-beautify'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'Townk/vim-autoclose'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'lilydjwg/colorizer'
+Plugin 'tpope/vim-dispatch'
+Plugin 'AutoComplPop'
+Plugin 'leafgarland/typescript-vim'
+
+" The following are examples of different formats supported.
+" Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'bling/vim-airline'
+
+" Bundle 'adrianolaru/vim-adio'
+
+call vundle#end()            " required
+filetype plugin on    " required
+" }}}
+" Powerline & Fonts {{{
+set guifont=Inconsolata\ for\ Powerline:h15
+let g:Powerline_symbols = 'fancy'
+set encoding=utf-8
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set termencoding=utf-8
+" }}}
+" CtrlP {{{
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+set runtimepath^=~/.vim/bundle/nerdtree
+map <C-n> :NERDTreeToggle<CR>
+
+" Please ignore this
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|bower_components\|tmp'
+
+" Use ag when performing searches for much faster Ctrl+P
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+" Hotkey for searching tags (ctags)
+map <C-t> :CtrlPTag<CR>
+" }}}
+" Syntastic {{{
+set runtimepath^=~/.vim/bundle/syntastic
+" }}}
+" ColorTable {{{
+set runtimepath^=~/.vim/plugin/xterm-color-table.vim
+" }}}
+" Syntastic {{{
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_javascript_checkers = ['eslint']
+
+" Disable syntastic for Handlebars, HYML & PHP 
+" Disabled for PHP due to legacy projects and insance default lints
+let g:syntastic_disabled_filetypes=['hbs','html']
+
+" Python PEP8
+let g:syntastic_python_checkers=['pep8']
+
+" }}}
+" Yogo and limelight {{{
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+nmap <c-y> :Limelight!!<CR>
+
+" Color for dimactive
+let g:diminactive_use_syntax = 1
+let g:diminactive_use_colorcolumn = 0
+" }}}
+
+" vim-mustache-handlebars {{{
+let g:mustache_abbreviations = 1
+" }}}
+" }}}
+
+" Credits:
+"  â€¢ http://vim.wikia.com/wiki/Example_vimrc
+"  â€¢ http://vim.wikia.com/wiki/Example_vimrc
+
+" vim:fdm=marker:rnu:noma
